@@ -18,8 +18,10 @@ app.use(
 );
 
 app.use("/customer/auth/*", function auth(req, res, next) {
+  //Write the authenication mechanism here
   if (req.session.authorization) {
-    let token = req.session.authorization["accessToken"];
+    const token = req.session.authorization["accessToken"];
+
     jwt.verify(token, "access", (err, user) => {
       if (!err) {
         req.user = user;
@@ -29,7 +31,7 @@ app.use("/customer/auth/*", function auth(req, res, next) {
       }
     });
   } else {
-    return res.status(403).json({ message: "User not logged in" });
+    return res.status(403).json({ message: "User not logged in!" });
   }
 });
 
